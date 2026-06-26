@@ -17,5 +17,4 @@ backend:
   name: github
   repo: kayceeeasy/financial-abundance-hub
   branch: main
-  base_url: https://decap-redirect.herokuapp.com
-  auth_endpoint: auth
+  base_url: https://api.netlify.com/auth
