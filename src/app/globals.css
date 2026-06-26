@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@layer base {
+  /* Set the background on the html/body to transparent so the canvas shows */
+  html, body {
+    @apply bg-transparent m-0 p-0;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+    scroll-behavior: smooth;
+  }
+
+  ::-webkit-scrollbar {
+    display: none !important;
+  }
+}
+
+.gradient-text {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-amber-200 to-amber-500;
+}
