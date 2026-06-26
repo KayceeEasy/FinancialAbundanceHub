@@ -17,4 +17,4 @@ backend:
   name: github
   repo: kayceeeasy/financial-abundance-hub
   branch: main
-  base_url: https://financialabundancehub.com
+  base_url: https://api.decapcms.org

@@ -31,33 +31,21 @@ export default function Home() {
       {/* 1. HERO */}
 <section className="relative py-20 md:py-32 px-6 text-center overflow-hidden">
   
-  {/* Animated Glows - Added opacity to ensure they show up */}
-  <motion.div 
-    animate={{ scale: [1, 1.2, 1], rotate: [0, 90, 0] }}
-    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-    className="absolute top-0 right-0 w-[500px] h-[500px] bg-amber-600/20 blur-[120px] rounded-full -z-10 opacity-70"
-  />
-  <motion.div 
-    animate={{ scale: [1.2, 1, 1.2], rotate: [0, -90, 0] }}
-    transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-    className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-amber-500/10 blur-[120px] rounded-full -z-10 opacity-70"
-  />
-
   <motion.div 
     initial={{ opacity: 0, y: 40 }} 
     animate={{ opacity: 1, y: 0 }} 
     transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
   >
-    <h1 className="text-4xl md:text-9xl font-black leading-[1.1] md:leading-[0.9] tracking-tighter mb-8 break-words text-white">
+    <h1 className="text-4xl md:text-9xl font-black leading-[1.1] md:leading-[0.9] tracking-tighter mb-8 mt-8 break-words text-white">
       FROM BROKE TO <br className="hidden md:block"/>
       <span className="text-amber-500 whitespace-nowrap drop-shadow-[0_0_20px_rgba(245,158,11,0.5)]">
         GLOBAL WEALTH
       </span>
     </h1>
-    <p className="text-lg md:text-2xl text-slate-300 max-w-3xl mx-auto px-4 italic font-light">
-      From Broke to Building Global Wealth — Learn the Exact System That Can Change Your Financial Life in Months.
+    <p className="text-lg md:text-2xl text-slate-300 max-w-3xl mx-auto px-6 italic font-light">
+      Learn the Exact System That Can Change Your Financial Life in Months.
     </p>
-    <p className="text-lg md:text-2xl text-slate-400 max-w-3xl mx-auto px-4 italic font-light z-20 relative">
+    <p className="text-lg md:text-2xl text-slate-400 max-w-3xl mx-auto px-6 italic font-light z-20 relative">
       This is not motivation. This is a proven mentorship designed to help you fix your finances, start investing, and build real wealth — even if you’re starting from scratch.
     </p>
   </motion.div>
@@ -65,14 +53,14 @@ export default function Home() {
 
       {/* 2. MY STORY */}
       <motion.section initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={reveal} className="py-20 px-6 max-w-3xl mx-auto text-center border-t border-white/10">
-        <h2 className="text-3xl md:text-4xl font-bold mb-10 px-4">I wasn’t born wealthy… but I refused to stay broke.</h2>
+        <h2 className="text-3xl md:text-4xl font-bold mb-10 px-4">I wasn’t born wealthy… <br />but I refused to stay broke.</h2>
         <div className="space-y-6 text-lg md:text-xl text-slate-400 italic px-4">
           <p>I remember counting coins just to get by.</p>
           <p>Working hard, yet seeing nothing in my account.</p>
           <p>Watching others build wealth while I felt stuck.</p>
           <p className="font-bold text-white text-xl md:text-2xl not-italic py-4">Then everything changed.</p>
           <p>I discovered that wealth isn’t luck. It’s knowledge, systems, and the right mentorship.</p>
-          <p>From my first real estate deal to building a global investment portfolio… I transformed my life.</p>
+          <p>From my first real estate deal to building a global investment portfolio… <br />I transformed my life.</p>
           <p className="not-italic font-bold text-white pt-4">And now, I want to help you do the same.</p>
         </div>
       </motion.section>
