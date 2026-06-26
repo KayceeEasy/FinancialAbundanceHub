@@ -59,7 +59,7 @@ export default function Home() {
           <p>Working hard, yet seeing nothing in my account.</p>
           <p>Watching others build wealth while I felt stuck.</p>
           <p className="font-bold text-white text-xl md:text-2xl not-italic py-4">Then everything changed.</p>
-          <p>I discovered that wealth isn’t luck. It’s knowledge, systems, and the right mentorship.</p>
+          <p>I discovered that wealth isn’t luck. <br /> It’s knowledge, systems, and the right mentorship.</p>
           <p>From my first real estate deal to building a global investment portfolio… <br />I transformed my life.</p>
           <p className="not-italic font-bold text-white pt-4">And now, I want to help you do the same.</p>
         </div>
