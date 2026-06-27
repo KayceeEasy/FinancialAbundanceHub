@@ -1,20 +1,52 @@
-import Link from 'next/link';
-import { getSortedPostsData } from '@/lib/posts';
+import { client } from "@/lib/sanity/client";
+import {
+  POSTS_QUERY,
+  FEATURED_POST_QUERY,
+} from "@/lib/sanity/queries";
 
-export default function BlogPage() {
-  const allPostsData = getSortedPostsData();
+import FeaturedPost from "@/components/blog/FeaturedPost";
+import ArticleRow from "@/components/blog/ArticleRow";
+
+export default async function BlogPage() {
+
+  const featured = await client.fetch(FEATURED_POST_QUERY);
+
+  const posts = await client.fetch(POSTS_QUERY);
+
+  const latest = posts.filter(
+    (p: any) => p._id !== featured?._id
+  );
 
   return (
-    <main className="min-h-screen bg-[#0a0a0a] text-white pt-32 px-6 max-w-4xl mx-auto">
-      <h1 className="text-5xl font-black mb-16">Insights</h1>
-      <div className="space-y-8">
-        {allPostsData.map(({ id, date, title }) => (
-          <Link href={`/blog/${id}`} key={id} className="block p-8 border border-white/10 rounded-2xl hover:bg-white/5 transition">
-            <h2 className="text-2xl font-bold mb-2">{title}</h2>
-            <p className="text-amber-500 text-sm">{date}</p>
-          </Link>
+    <main className="max-w-6xl mx-auto px-6 py-20">
+
+      <header className="mb-20 mt-6">
+        <h1 className="text-5xl font-black">
+          Insights
+        </h1>
+
+        <p className="mt-4 text-xl text-slate-400 max-w-2xl">
+          Ideas on wealth, investing, real estate and building financial freedom.
+        </p>
+      </header>
+
+      <FeaturedPost post={featured} />
+
+      <section>
+
+        <h2 className="text-3xl font-bold mb-5">
+          Latest Posts
+        </h2>
+
+        {latest.map((post: any) => (
+          <ArticleRow
+            key={post._id}
+            post={post}
+          />
         ))}
-      </div>
+
+      </section>
+
     </main>
   );
 }

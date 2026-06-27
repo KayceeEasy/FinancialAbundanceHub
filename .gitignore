@@ -49,3 +49,8 @@ next-env.d.ts
 !.dev.vars.example
 
 !.env.example
+
+# Studio
+studio/node_modules
+studio/.sanity
+studio/dist

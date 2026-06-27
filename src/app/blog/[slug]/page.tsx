@@ -1,36 +1,51 @@
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
-import { remark } from 'remark';
-import html from 'remark-html';
-import { notFound } from 'next/navigation';
+import { client } from "@/lib/sanity/client";
+import { POST_QUERY } from "@/lib/sanity/queries";
+import { urlFor } from "@/lib/sanity/image";
+import { PortableText } from "@portabletext/react";
+import { notFound } from "next/navigation";
 
-// Next.js App Router requires params to be a Promise
-export default async function Post({ params }: { params: Promise<{ slug: string }> }) {
+export default async function BlogPostPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const { slug } = await params;
-  
-  const fullPath = path.join(process.cwd(), 'content', `${slug}.md`);
 
-  // Check if file exists, if not, trigger a 404
-  if (!fs.existsSync(fullPath)) {
-    notFound();
+  const post = await client.fetch(POST_QUERY, {
+    slug,
+  });
+
+  if (!post) {
+    return notFound();
   }
 
-  const fileContents = fs.readFileSync(fullPath, 'utf8');
-  const { data, content } = matter(fileContents);
-  
-  // Use remark to convert markdown into HTML string
-  const processedContent = await remark().use(html).process(content);
-  const contentHtml = processedContent.toString();
-
   return (
-    <main className="pt-32 px-6 max-w-3xl mx-auto text-white min-h-screen">
-      <h1 className="text-5xl font-black mb-4 tracking-tight">{data.title}</h1>
-      <p className="text-amber-500 mb-12">{data.date}</p>
-      <div 
-        className="prose prose-invert prose-lg max-w-none" 
-        dangerouslySetInnerHTML={{ __html: contentHtml }} 
-      />
+    <main className="max-w-3xl mx-auto px-6 py-10">
+      <h1>{post.title}</h1>
+
+      {post.publishedAt && (
+        <p style={{ opacity: 0.6 }}>
+          {new Date(post.publishedAt).toLocaleDateString()}
+        </p>
+      )}
+
+      {post.featuredImage && (
+        <img
+          src={urlFor(post.featuredImage).width(900).url()}
+          alt={post.title}
+          style={{ width: "100%", borderRadius: "10px", margin: "1rem 0" }}
+        />
+      )}
+
+      {post.excerpt && (
+        <p style={{ fontSize: "1.1rem", opacity: 0.8 }}>
+          {post.excerpt}
+        </p>
+      )}
+
+      <article className="prose prose-lg max-w-none mt-8">
+        <PortableText value={post.body} />
+      </article>
     </main>
   );
 }
