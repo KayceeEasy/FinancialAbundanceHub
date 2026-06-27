@@ -1,18 +1,13 @@
-type Props = {
-  category?: string;
-};
+interface Props {
+  excerpt?: string; // Add excerpt here
+  date: string;
+}
 
-const labels: Record<string, string> = {
-  wealth: "WEALTH BUILDING",
-  "real-estate": "REAL ESTATE",
-  investing: "INVESTING",
-  mindset: "MINDSET",
-};
-
-export default function CategoryBadge({ category }: Props) {
+export default function ReadingTime({ excerpt, date }: Props) {
   return (
-    <span className="inline-flex rounded-full bg-amber-500/15 text-amber-400 border border-amber-500/20 px-3 py-1 text-xs font-semibold tracking-widest uppercase">
-      {labels[category || ""] || "INSIGHT"}
-    </span>
+    <div className="text-sm text-slate-400">
+      {excerpt && <p className="mb-2 italic">{excerpt}</p>}
+      <p>{new Date(date).toLocaleDateString()}</p>
+    </div>
   );
 }
