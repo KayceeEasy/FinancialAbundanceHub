@@ -34,7 +34,6 @@ export default function FeaturedPost({ post }: any) {
 
         <div className="mt-8">
           <ReadingTime
-            excerpt={post.excerpt}
             date={post.publishedAt}
           />
         </div>
