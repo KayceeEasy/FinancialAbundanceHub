@@ -5,22 +5,23 @@ export default function BlogCard({ post }: { post: any }) {
   return (
     <Link
       href={`/blog/${post.slug.current}`}
-      className="group overflow-hidden rounded-2xl border border-white/10 bg-white/5 transition hover:border-amber-500/50 hover:bg-white/10"
+      className="group overflow-hidden rounded-2xl border border-white/10 bg-white/5 transition hover:border-amber-500/50 hover:bg-white/10 flex flex-col h-full"
     >
       {post.featuredImage && (
-        <img
-          src={urlFor(post.featuredImage).width(800).url()}
-          alt={post.title}
-          className="h-56 w-full object-cover transition duration-500 group-hover:scale-105"
-        />
+        <div className="h-56 w-full overflow-hidden">
+          <img
+            src={urlFor(post.featuredImage).width(800).url()}
+            alt={post.title}
+            className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+          />
+        </div>
       )}
 
-      <div className="p-6">
+      <div className="p-6 flex flex-col flex-grow">
         <div className="mb-4 flex items-center justify-between">
           <span className="rounded-full bg-amber-500/20 px-3 py-1 text-xs font-semibold text-amber-400">
             {post.category}
           </span>
-
           <span className="text-xs text-slate-400">
             {new Date(post.publishedAt).toLocaleDateString("en-US", {
               month: "short",
@@ -34,11 +35,10 @@ export default function BlogCard({ post }: { post: any }) {
           {post.title}
         </h2>
 
-        {post.excerpt && (
-          <p className="line-clamp-3 text-slate-400">
-            {post.excerpt}
-          </p>
-        )}
+        {/* This is the only place rendering the excerpt */}
+        <p className="line-clamp-3 text-slate-400 flex-grow">
+          {post.excerpt}
+        </p>
 
         <div className="mt-6 font-semibold text-amber-500">
           Read Article →

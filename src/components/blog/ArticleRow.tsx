@@ -18,24 +18,22 @@ export default function ArticleRow({ post }: any) {
       )}
 
       <div className="flex flex-col justify-center flex-1">
-
         <CategoryBadge category={post.category} />
 
         <h2 className="mt-4 text-2xl font-bold group-hover:text-amber-400 transition">
           {post.title}
         </h2>
 
+        {/* This is the one place for the excerpt */}
         <p className="mt-3 text-slate-400 line-clamp-2">
           {post.excerpt}
         </p>
 
         <div className="mt-4">
           <ReadingTime
-            excerpt={post.excerpt}
             date={post.publishedAt}
           />
         </div>
-
       </div>
     </Link>
   );
