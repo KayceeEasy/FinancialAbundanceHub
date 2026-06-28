@@ -35,7 +35,6 @@ export default function BlogCard({ post }: { post: any }) {
           {post.title}
         </h2>
 
-        {/* This is the only place rendering the excerpt */}
         <p className="line-clamp-3 text-slate-400 flex-grow">
           {post.excerpt}
         </p>

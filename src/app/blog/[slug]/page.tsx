@@ -10,40 +10,58 @@ export default async function BlogPostPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-
-  const post = await client.fetch(POST_QUERY, {
-    slug,
-  });
+  const post = await client.fetch(POST_QUERY, { slug });
 
   if (!post) {
     return notFound();
   }
 
   return (
-    <main className="max-w-3xl mx-auto px-6 py-10">
-      <h1>{post.title}</h1>
+    <main className="max-w-4xl mx-auto px-6 pt-32 pb-20 min-h-screen text-white">
+      
+      {/* Category Badge */}
+      <div className="mb-6">
+        <span className="bg-amber-500/20 text-amber-400 px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest">
+          {post.category || "Insight"}
+        </span>
+      </div>
 
+      {/* Premium Title */}
+      <h1 className="text-4xl md:text-4xl font-black leading-[1.1] tracking-normal mb-8">
+        {post.title}
+      </h1>
+
+      {/* Meta Info */}
       {post.publishedAt && (
-        <p style={{ opacity: 0.6 }}>
-          {new Date(post.publishedAt).toLocaleDateString()}
+        <p className="text-slate-500 text-sm mb-10 border-b border-white/10 pb-8">
+          Published on {new Date(post.publishedAt).toLocaleDateString("en-US", {
+            month: "long",
+            day: "numeric",
+            year: "numeric",
+          })}
         </p>
       )}
 
+      {/* Featured Image */}
       {post.featuredImage && (
-        <img
-          src={urlFor(post.featuredImage).width(900).url()}
-          alt={post.title}
-          style={{ width: "100%", borderRadius: "10px", margin: "1rem 0" }}
-        />
+        <div className="w-full h-64 md:h-96 rounded-3xl overflow-hidden mb-12 shadow-2xl">
+          <img
+            src={urlFor(post.featuredImage).width(1200).url()}
+            alt={post.title}
+            className="w-full h-full object-cover"
+          />
+        </div>
       )}
 
+      {/* Excerpt */}
       {post.excerpt && (
-        <p style={{ fontSize: "1.1rem", opacity: 0.8 }}>
+        <div className="text-xl md:text-2xl text-slate-300 italic mb-12 border-l-4 border-amber-500 pl-6">
           {post.excerpt}
-        </p>
+        </div>
       )}
 
-      <article className="prose prose-lg max-w-none mt-8">
+      {/* Content Body */}
+      <article className="prose prose-invert prose-lg md:prose-xl max-w-none prose-headings:font-bold prose-a:text-amber-500 prose-blockquote:border-amber-500">
         <PortableText value={post.body} />
       </article>
     </main>
