@@ -1,7 +1,7 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 @layer base {
-  /* Set the background on the html/body to transparent so the canvas shows */
   html, body {
     @apply bg-transparent m-0 p-0;
     scrollbar-width: none !important;

@@ -11,10 +11,11 @@ export default function Navbar() {
   const programs = [
     { name: "6-Month Wealth Accelerator", url: "/apply?program=6-Month-Wealth-Accelerator" },
     { name: "12-Month Legacy Mentorship", url: "/apply?program=12-Month-Legacy-Mentorship" },
-    { name: "21-Day Challenge", url: "hhttps://selar.com/p/66162y611m?affiliate=e3467547b6" },
+    { name: "21-Day Challenge", url: "https://selar.com/p/66162y611m?affiliate=e3467547b6" },
     { name: "Financial Intelligence", url: "https://app.lifecarduniversity.org/courses/financial-intelligence/" },
-    { name: "Wealth Creation Digital Library", url: "https://app.lifecarduniversity.org/courses/" },
-    { name: "9 to 5 Is Not a Scam", url: "https://selar.com/0x310v" }
+    { name: "Wealth Creation Digital Library", url: "https://lifecarduniversity.org/courses/wealth-creation-digital-library/" },
+    { name: "9 to 5 Is Not a Scam", url: "https://selar.com/0x310v" },
+    { name: "All Courses", url: "https://lifecarduniversity.org/courses/" }
   ];
 
   return (
