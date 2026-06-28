@@ -3,6 +3,7 @@ import { POST_QUERY } from "@/lib/sanity/queries";
 import { urlFor } from "@/lib/sanity/image";
 import { PortableText } from "@portabletext/react";
 import { notFound } from "next/navigation";
+import Link from "next/dist/client/link";
 
 export default async function BlogPostPage({
   params,
@@ -17,8 +18,18 @@ export default async function BlogPostPage({
   }
 
   return (
+    
     <main className="max-w-4xl mx-auto px-6 pt-32 pb-20 min-h-screen text-white">
       
+      <Link 
+      href="/blog" 
+      className="inline-flex items-center gap-2 text-amber-500 hover:text-amber-400 transition-colors mb-8 font-bold tracking-widest text-sm uppercase"
+    >
+      <span className="group-hover:-translate-x-1 transition-transform">←</span> 
+      Back
+    </Link>
+
+
       {/* Category Badge */}
       <div className="mb-6">
         <span className="bg-amber-500/20 text-amber-400 px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest">
