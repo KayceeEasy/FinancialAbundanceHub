@@ -9,12 +9,13 @@ export default function Navbar() {
 
   // Defined programs with their specific destination URLs
   const programs = [
+    { name: "9 to 5 Is Not a Scam", url: "/programs/9-to-5" },
+    { name: "Million Dollar Mastermind", url: "/programs/million-dollar-mastermind" },
+    { name: "21-Day Challenge", url: "/programs/21-days-challenge" },
     { name: "6-Month Wealth Accelerator", url: "/apply?program=6-Month-Wealth-Accelerator" },
     { name: "12-Month Legacy Mentorship", url: "/apply?program=12-Month-Legacy-Mentorship" },
-    { name: "21-Day Challenge", url: "https://selar.com/p/66162y611m?affiliate=e3467547b6" },
     { name: "Financial Intelligence", url: "https://app.lifecarduniversity.org/courses/financial-intelligence/" },
     { name: "Wealth Creation Digital Library", url: "https://lifecarduniversity.org/courses/wealth-creation-digital-library/" },
-    { name: "9 to 5 Is Not a Scam", url: "https://selar.com/0x310v" },
     { name: "All Courses", url: "https://lifecarduniversity.org/courses/" }
   ];
 
@@ -32,9 +33,9 @@ export default function Navbar() {
           <button className="hover:text-amber-500 transition flex items-center gap-1">Programs ▾</button>
           <AnimatePresence>
             {dropdownOpen && (
-              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="absolute top-full left-0 w-72 bg-black border border-white/10 p-4 mt-2 rounded-xl shadow-2xl z-[110]">
+              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="absolute top-full left-0 w-72 bg-zinc-950 border border-[#d4af37]/40 p-4 mt-2 rounded-xl shadow-2xl z-[110]">
                 {programs.map(p => (
-                  <a key={p.name} href={p.url} target={p.url.startsWith('http') ? "_blank" : undefined} className="block py-2 text-xs text-slate-300 hover:text-amber-500 transition">
+                  <a key={p.name} href={p.url} target={p.url.startsWith('http') ? "_blank" : undefined} className="block py-2 text-sm text-white hover:text-amber-500 transition">
                     {p.name}
                   </a>
                 ))}

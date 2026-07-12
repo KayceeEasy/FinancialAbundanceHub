@@ -102,7 +102,7 @@ export default function HomeClient({ posts }: any) {
           {[
             { t: "Tier 1 – Foundation Mentorship", d: "6-month mentorship + Graduation in Doha", p: "$1,000" },
             { t: "Tier 2 – Certification Program", d: "Real Estate School (Africa & Gulf) | Certification from Qatar Real Estate Academy & Lifecard University", p: "$2,000" },
-            { t: "Tier 3 – Advanced Investment + Certification", d: "Includes deep mentorship + ASCOK Qatar certification", p: "$2,500" }
+            { t: "Tier 3 – Advanced Investment + Certification", d: "Includes deep mentorship + AssocRICS Qatar certification", p: "$2,500" }
           ].map((item, i) => (
             <div key={i} className="flex flex-col md:flex-row justify-between items-start md:items-center p-6 border border-white/10 rounded-xl gap-4">
               <div><h4 className="font-bold text-lg">{item.t}</h4><p className="text-slate-400 text-sm">{item.d}</p></div>

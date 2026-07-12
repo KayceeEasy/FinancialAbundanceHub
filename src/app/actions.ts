@@ -11,10 +11,14 @@ export async function submitApplication(formData: FormData) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        name: data.name,
+        name: data.name ?? data.fullName,
         email: data.email,
         phone: data.phone,
-        program: data.program
+        program: data.program ?? '9 to 5 Is Not a Scam — Enterprise Quote',
+        companyName: data.companyName,
+        workforceSize: data.workforceSize,
+        industry: data.industry,
+        primaryChallenge: data.primaryChallenge,
       }),
     });
 

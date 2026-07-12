@@ -1,6 +1,40 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+/* Shared premium palette.  The particle treatment keeps its own gold dust; this
+   only changes the old amber/orange UI accent used throughout the site. */
+:root {
+  --brand-gold: #d48d37;
+  --brand-gold-light: #f1d875;
+}
+
+.text-amber-500 { color: var(--brand-gold) !important; }
+.bg-amber-500 { background-color: var(--brand-gold) !important; }
+.border-amber-500 { border-color: var(--brand-gold) !important; }
+.from-amber-500 { --tw-gradient-from: color-mix(in srgb, var(--brand-gold) 20%, transparent) var(--tw-gradient-from-position) !important; }
+.to-amber-500 { --tw-gradient-to: color-mix(in srgb, var(--brand-gold) 0%, transparent) var(--tw-gradient-to-position) !important; }
+.hover\:bg-amber-400:hover { background-color: var(--brand-gold-light) !important; }
+
+.program-display { font-family: Georgia, 'Times New Roman', serif; letter-spacing: -0.03em; }
+.program-kicker { color: var(--brand-gold); letter-spacing: .18em; text-transform: uppercase; font-weight: 700; font-size: .75rem; }
+.program-video { aspect-ratio: 16 / 9; width: 100%; border: 1px solid color-mix(in srgb, var(--brand-gold) 35%, transparent); border-radius: 1rem; overflow: hidden; background: #080808; }
+.program-video--portrait { aspect-ratio: 9 / 16; max-width: 24rem; margin-inline: auto; }
+.program-video iframe { width: 100%; height: 100%; border: 0; }
+.phone-picker .PhoneInputCountrySelect,
+.phone-picker input { color: white; background: transparent; }
+.phone-picker .PhoneInputCountrySelect option { color: #111; background: white; }
+.phone-picker input { min-width: 0; outline: none; }
+.needs-list li { text-decoration: line-through; text-decoration-color: rgb(248 113 113 / .8); text-decoration-thickness: 2px; }
+.loop-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
+.loop-list li { border: 1px solid rgb(248 113 113 / .25); background: rgb(69 10 10 / .22); border-radius: .75rem; padding: 1rem; list-style: none; }
+@media (max-width: 640px) { .loop-list { grid-template-columns: 1fr; } }
+
+/* Keep long-form pages purposeful without leaving oversized dead space. */
+.mb-20 { margin-bottom: 3rem !important; }
+.py-20 { padding-block: 3rem !important; }
+.py-16 { padding-block: 2.5rem !important; }
+.pb-16 { padding-bottom: 2.5rem !important; }
+
 @layer base {
   html, body {
     @apply bg-transparent m-0 p-0;
