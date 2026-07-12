@@ -1,7 +1,12 @@
 "use client";
 
+import { useRef } from "react";
+import Image from "next/image";
 import { motion, Variants } from "framer-motion";
 import Link from "next/link";
+import nineToFiveImage from "../../content/media/9-to-5-book-mockup.png";
+import mastermindImage from "../../content/media/MDM.jpeg";
+import routineImage from "../../content/media/21-days-challenge.jpg";
 
 const reveal: Variants = {
   hidden: { opacity: 0, y: 30 },
@@ -13,6 +18,42 @@ const reveal: Variants = {
 };
 
 export default function HomeClient({ posts }: any) {
+  const programmesCarousel = useRef<HTMLDivElement>(null);
+  const moveCarousel = (direction: -1 | 1) => {
+    programmesCarousel.current?.scrollBy({ left: direction * Math.min(programmesCarousel.current.clientWidth * 0.88, 500), behavior: "smooth" });
+  };
+
+  const programmes = [
+    {
+      eyebrow: "For teams & organisations",
+      title: "9 to 5 Is Not a Scam",
+      description: "Re-engineer workforce mindset, ownership, and performance from the inside out.",
+      href: "/programs/9-to-5",
+      cta: "Explore the Compendium",
+      image: nineToFiveImage,
+      imageClass: "object-contain p-5",
+    },
+    {
+      eyebrow: "For the ambitious woman",
+      title: "Million Dollar Mastermind",
+      description: "A high-proximity room for the woman ready to turn ambition into assets.",
+      href: "/programs/million-dollar-mastermind",
+      cta: "Enter the Mastermind",
+      image: mastermindImage,
+      imageClass: "object-cover",
+      featured: true,
+    },
+    {
+      eyebrow: "For personal execution",
+      title: "21 Days Routine",
+      description: "A focused execution system that replaces the start-stop cycle with consistency.",
+      href: "/programs/21-days-challenge",
+      cta: "Start the Routine",
+      image: routineImage,
+      imageClass: "object-cover",
+    },
+  ];
+
   const testimonials = [
     { name: "Okiemute S.", text: "This mentorship changed my financial trajectory in just 6 months.", img: "https://ui-avatars.com/api/?name=Okiemute+S&background=random" },
     { name: "Ngozi S. A.", text: "The real estate strategies are second to none. I'm finally building assets.", img: "https://ui-avatars.com/api/?name=Ngozi+S+A&background=random" },
@@ -45,6 +86,44 @@ export default function HomeClient({ posts }: any) {
           </p>
         </motion.div>
       </section>
+
+      {/* FEATURED PROGRAMMES */}
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-80px" }}
+        variants={reveal}
+        className="py-16 border-y border-white/10 bg-gradient-to-b from-white/[0.04] to-transparent"
+      >
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex items-end justify-between gap-6 mb-8">
+            <div>
+              <p className="program-kicker mb-3">Choose your next move</p>
+              <h2 className="program-display text-4xl md:text-6xl font-bold">Signature programmes</h2>
+            </div>
+            <div className="hidden sm:flex gap-3">
+              <button type="button" aria-label="Previous programme" onClick={() => moveCarousel(-1)} className="w-11 h-11 rounded-full border border-white/20 text-white hover:border-amber-500 hover:text-amber-500 transition">←</button>
+              <button type="button" aria-label="Next programme" onClick={() => moveCarousel(1)} className="w-11 h-11 rounded-full border border-white/20 text-white hover:border-amber-500 hover:text-amber-500 transition">→</button>
+            </div>
+          </div>
+
+          <div ref={programmesCarousel} className="flex gap-5 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-4 -mx-6 px-6">
+            {programmes.map((programme) => (
+              <article key={programme.href} className={`group relative shrink-0 snap-center w-[84vw] sm:w-[29rem] min-h-[33rem] overflow-hidden rounded-3xl border ${programme.featured ? 'border-[#d4af37]/70' : 'border-white/15'} bg-zinc-950`}>
+                <Image src={programme.image} alt="" fill sizes="(max-width: 640px) 84vw, 464px" className={`${programme.imageClass} transition duration-700 group-hover:scale-105`} />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/65 to-black/5" />
+                <div className="absolute inset-x-0 bottom-0 p-7 md:p-8">
+                  <p className="program-kicker mb-3">{programme.eyebrow}</p>
+                  <h3 className="program-display text-3xl md:text-4xl font-bold mb-3">{programme.title}</h3>
+                  <p className="text-slate-300 leading-relaxed mb-6 max-w-sm">{programme.description}</p>
+                  <Link href={programme.href} className="inline-flex items-center gap-2 bg-amber-500 text-black px-5 py-3 rounded-full font-bold transition hover:bg-amber-400">{programme.cta} <span aria-hidden="true">→</span></Link>
+                </div>
+              </article>
+            ))}
+          </div>
+          <p className="sm:hidden text-center text-slate-400 text-sm mt-2">← Swipe →</p>
+        </div>
+      </motion.section>
 
       {/* 2. MY STORY */}
       <motion.section initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={reveal} className="py-20 px-6 max-w-3xl mx-auto text-center border-t border-white/10">
