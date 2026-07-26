@@ -77,10 +77,10 @@ export async function submitApplication(formData: FormData) {
     validTimestamps.push(now);
     rateLimitMap.set(clientIp, validTimestamps);
 
-    // 4. Send Payload with All Field Aliases to Google Apps Script Web App
+    // 4. Send Payload with All Field Aliases via both URL query params and POST body for Google Apps Script 302 redirect compatibility
     const SHEET_URL = "https://script.google.com/macros/s/AKfycbyU9V0GscMfOPYXhH_BZ_QGZoGcLB6m2ARnTo_lh7m9RBNoJlTI6tszd91u3JGJRDLR/exec";
 
-    const payload = {
+    const payload: Record<string, string> = {
       // Primary keys
       name: validated.name,
       email: validated.email,
@@ -101,10 +101,17 @@ export async function submitApplication(formData: FormData) {
       submittedAt: new Date().toISOString(),
     };
 
-    const response = await fetch(SHEET_URL, {
+    const urlParams = new URLSearchParams();
+    Object.entries(payload).forEach(([k, v]) => {
+      urlParams.append(k, v);
+    });
+
+    const targetUrl = `${SHEET_URL}?${urlParams.toString()}`;
+
+    const response = await fetch(targetUrl, {
       method: "POST",
-      headers: { "Content-Type": "text/plain;charset=utf-8" },
-      body: JSON.stringify(payload),
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: urlParams.toString(),
     });
 
     if (!response.ok) {
