@@ -1,12 +1,38 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { Suspense, useState, useTransition } from "react";
-import { motion } from "framer-motion";
+import { Suspense, useState, useTransition, useRef, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import PhoneInputWithCountrySelect from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import { submitApplication } from "../actions";
+
+const INDUSTRIES = [
+  "Artificial Intelligence (AI) & Machine Learning",
+  "Accounting & Finance",
+  "Agriculture & Agribusiness",
+  "Arts, Entertainment & Recreation",
+  "Automotive",
+  "Construction & Contracting",
+  "Education & Training",
+  "Energy, Oil & Gas / Utilities",
+  "Engineering & Architecture",
+  "Government & Public Sector",
+  "Healthcare & Life Sciences",
+  "Hospitality, Travel & Food Service",
+  "Information Technology & Software (SaaS)",
+  "Insurance",
+  "Legal Services",
+  "Manufacturing & Industrial",
+  "Marketing, Advertising & PR",
+  "Non-Profit & Civic Organization",
+  "Real Estate & Housing",
+  "Retail & Consumer Goods",
+  "Telecommunications",
+  "Transportation & Logistics",
+  "Other",
+];
 
 function ApplyForm() {
   const searchParams = useSearchParams();
@@ -15,9 +41,28 @@ function ApplyForm() {
   const [phone, setPhone] = useState<string>("");
   const [selectedIndustry, setSelectedIndustry] = useState<string>("");
   const [otherIndustry, setOtherIndustry] = useState<string>("");
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
   const [isPending, startTransition] = useTransition();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const filteredIndustries = INDUSTRIES.filter((ind) =>
+    ind.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -147,38 +192,103 @@ function ApplyForm() {
 
           <div>
             <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
-              Industry / Occupation
+              Workforce Size (Optional)
             </label>
             <select
-              value={selectedIndustry}
-              onChange={(e) => setSelectedIndustry(e.target.value)}
+              name="workforceSize"
               className="w-full bg-zinc-900/80 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 transition text-sm"
             >
-              <option value="" className="bg-zinc-900 text-slate-400">Select your industry / occupation</option>
-              <option value="Financial Services & Fintech" className="bg-zinc-900">Financial Services & Fintech</option>
-              <option value="Real Estate & Property Development" className="bg-zinc-900">Real Estate & Property Development</option>
-              <option value="Technology & Software (SaaS)" className="bg-zinc-900">Technology & Software (SaaS)</option>
-              <option value="Healthcare & Pharmaceuticals" className="bg-zinc-900">Healthcare & Pharmaceuticals</option>
-              <option value="E-Commerce & Retail" className="bg-zinc-900">E-Commerce & Retail</option>
-              <option value="Corporate & Enterprise Services" className="bg-zinc-900">Corporate & Enterprise Services</option>
-              <option value="Oil, Energy & Infrastructure" className="bg-zinc-900">Oil, Energy & Infrastructure</option>
-              <option value="Professional Services (Legal, Consulting, Accounting)" className="bg-zinc-900">Professional Services (Legal, Consulting, Accounting)</option>
-              <option value="Education & Coaching" className="bg-zinc-900">Education & Coaching</option>
-              <option value="Other" className="bg-zinc-900">Other (Please specify below)</option>
+              <option value="" className="bg-zinc-900 text-slate-400">Select workforce size (if applicable)</option>
+              <option value="Individual / Solo" className="bg-zinc-900">Individual / Solo Practitioner</option>
+              <option value="1-5 staff" className="bg-zinc-900">1 – 5 Team Members</option>
+              <option value="6-20 staff" className="bg-zinc-900">6 – 20 Staff (SME)</option>
+              <option value="21-50 staff" className="bg-zinc-900">21 – 50 Staff (Growth)</option>
+              <option value="51-100 staff" className="bg-zinc-900">51 – 100 Staff (Scale)</option>
+              <option value="100+ staff" className="bg-zinc-900">100+ Staff (Enterprise)</option>
             </select>
-
-            {selectedIndustry === "Other" && (
-              <motion.input
-                initial={{ opacity: 0, y: -5 }}
-                animate={{ opacity: 1, y: 0 }}
-                type="text"
-                value={otherIndustry}
-                onChange={(e) => setOtherIndustry(e.target.value)}
-                placeholder="Please specify your industry..."
-                className="w-full mt-3 bg-zinc-900/80 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 transition text-sm"
-              />
-            )}
           </div>
+        </div>
+
+        {/* Searchable Industry Combobox */}
+        <div ref={dropdownRef} className="relative">
+          <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
+            Industry / Occupation
+          </label>
+
+          <button
+            type="button"
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            className="w-full bg-zinc-900/80 border border-white/10 rounded-xl px-4 py-3 text-left text-white focus:outline-none focus:border-amber-500 transition text-sm flex justify-between items-center"
+          >
+            <span className={selectedIndustry ? "text-white font-medium" : "text-slate-500"}>
+              {selectedIndustry || "Search or select your industry..."}
+            </span>
+            <span className="text-slate-400 text-xs">{isDropdownOpen ? "▲" : "▼"}</span>
+          </button>
+
+          <AnimatePresence>
+            {isDropdownOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: 5 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 5 }}
+                className="absolute z-50 left-0 top-full mt-2 w-full bg-zinc-950 border border-amber-500/30 rounded-2xl p-3 shadow-2xl max-h-64 overflow-hidden flex flex-col"
+              >
+                {/* Search Bar */}
+                <input
+                  type="text"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  placeholder="Type to filter (e.g. AI, Media, Legal)..."
+                  className="w-full bg-zinc-900 border border-white/10 rounded-xl px-3 py-2 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-amber-500 mb-2"
+                  autoFocus
+                />
+
+                {/* Filtered Options List */}
+                <div className="overflow-y-auto space-y-1 pr-1 custom-scrollbar">
+                  {filteredIndustries.length > 0 ? (
+                    filteredIndustries.map((ind) => (
+                      <button
+                        key={ind}
+                        type="button"
+                        onClick={() => {
+                          setSelectedIndustry(ind);
+                          setIsDropdownOpen(false);
+                          setSearchTerm("");
+                        }}
+                        className={`w-full text-left px-3 py-2 rounded-lg text-xs transition flex items-center justify-between ${
+                          selectedIndustry === ind
+                            ? "bg-amber-500 text-black font-bold"
+                            : "text-slate-300 hover:bg-white/10 hover:text-white"
+                        }`}
+                      >
+                        <span>{ind}</span>
+                        {selectedIndustry === ind && <span>✓</span>}
+                      </button>
+                    ))
+                  ) : (
+                    <div className="p-3 text-xs text-slate-500 text-center">
+                      No matching industry found. Select "Other" below to specify.
+                    </div>
+                  )}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Conditional Custom Text Input for Other */}
+          {selectedIndustry === "Other" && (
+            <motion.input
+              initial={{ opacity: 0, y: -5 }}
+              animate={{ opacity: 1, y: 0 }}
+              type="text"
+              value={otherIndustry}
+              onChange={(e) => setOtherIndustry(e.target.value)}
+              placeholder="Please specify your industry..."
+              className="w-full mt-3 bg-zinc-900/80 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 transition text-sm"
+              required
+            />
+          )}
         </div>
 
         <div>
