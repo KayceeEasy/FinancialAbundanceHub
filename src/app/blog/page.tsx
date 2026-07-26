@@ -6,6 +6,12 @@ import {
 
 import FeaturedPost from "@/components/blog/FeaturedPost";
 import ArticleRow from "@/components/blog/ArticleRow";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Blog & Insights | Financial Abundance Hub",
+  description: "Ideas, guides, and strategic insights on wealth creation, investing, real estate, and financial independence.",
+};
 
 export default async function BlogPage() {
 
