@@ -68,13 +68,13 @@ export default function PrivacyPage() {
             <li>
               <strong>Email Support:</strong>{" "}
               <a href={mailtoUrl} className="text-amber-500 hover:underline">
-                Contact Privacy & Support Team via Email
+                Contact via Email
               </a>
             </li>
             <li>
-              <strong>Direct Phone / WhatsApp Support:</strong>{" "}
+              <strong>Phone Support:</strong>{" "}
               <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="text-amber-500 hover:underline">
-                Chat with Support on WhatsApp
+                Contact via Phone
               </a>
             </li>
             <li>

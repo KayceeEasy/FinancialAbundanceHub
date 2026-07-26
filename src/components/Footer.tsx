@@ -28,7 +28,7 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Official Inquiry Channels (Hidden raw email/phone) */}
+        {/* Official Inquiry Channels */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 bg-white/5 border border-white/10 rounded-2xl p-6 text-slate-300 text-xs">
           <div>
             <h4 className="text-white font-semibold mb-1 uppercase tracking-wider text-[11px] text-amber-500">Official Inquiries & Support</h4>
@@ -38,13 +38,13 @@ export default function Footer() {
             <div>
               <h5 className="text-slate-200 font-semibold mb-0.5">Email Support</h5>
               <a href={mailtoUrl} className="text-amber-500 hover:underline">
-                Contact Support via Email →
+                Contact via Email →
               </a>
             </div>
             <div>
-              <h5 className="text-slate-200 font-semibold mb-0.5">Direct Messaging</h5>
+              <h5 className="text-slate-200 font-semibold mb-0.5">Phone Support</h5>
               <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="text-amber-500 hover:underline">
-                Chat with Advisory via WhatsApp →
+                Contact via Phone →
               </a>
             </div>
           </div>
