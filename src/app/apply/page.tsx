@@ -4,12 +4,15 @@ import { useSearchParams } from "next/navigation";
 import { Suspense, useState, useTransition } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import PhoneInputWithCountrySelect from "react-phone-number-input";
+import "react-phone-number-input/style.css";
 import { submitApplication } from "../actions";
 
 function ApplyForm() {
   const searchParams = useSearchParams();
   const rawProgram = searchParams.get("program")?.replace(/-/g, ' ') || "General Inquiry";
 
+  const [phone, setPhone] = useState<string>("");
   const [isPending, startTransition] = useTransition();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -20,6 +23,7 @@ function ApplyForm() {
 
     const formData = new FormData(e.currentTarget);
     formData.set("program", rawProgram);
+    formData.set("phone", phone);
 
     startTransition(async () => {
       const res = await submitApplication(formData);
@@ -107,13 +111,17 @@ function ApplyForm() {
 
           <div>
             <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
-              Phone Number
+              Phone Number / WhatsApp
             </label>
-            <input
-              type="tel"
+            <PhoneInputWithCountrySelect
+              defaultCountry="NG"
+              international
+              countryCallingCodeEditable={false}
               name="phone"
-              placeholder="+1 (555) 000-0000"
-              className="w-full bg-zinc-900/80 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 transition text-sm"
+              placeholder="Enter phone number"
+              value={phone}
+              onChange={(value) => setPhone(value ?? "")}
+              className="phone-picker w-full bg-zinc-900/80 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus-within:border-amber-500 transition text-sm flex items-center gap-2"
             />
           </div>
         </div>
