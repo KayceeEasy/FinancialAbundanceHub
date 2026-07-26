@@ -221,7 +221,9 @@ function ApplyForm() {
             className="w-full bg-zinc-900/80 border border-white/10 rounded-xl px-4 py-3 text-left text-white focus:outline-none focus:border-amber-500 transition text-sm flex justify-between items-center"
           >
             <span className={selectedIndustry ? "text-white font-medium" : "text-slate-500"}>
-              {selectedIndustry || "Search or select your industry..."}
+              {selectedIndustry === "Other" && otherIndustry.trim()
+                ? otherIndustry.trim()
+                : (selectedIndustry || "Search or select your industry...")}
             </span>
             <span className="text-slate-400 text-xs">{isDropdownOpen ? "▲" : "▼"}</span>
           </button>
@@ -246,30 +248,44 @@ function ApplyForm() {
 
                 {/* Filtered Options List */}
                 <div className="overflow-y-auto space-y-1 pr-1 custom-scrollbar">
-                  {filteredIndustries.length > 0 ? (
-                    filteredIndustries.map((ind) => (
-                      <button
-                        key={ind}
-                        type="button"
-                        onClick={() => {
-                          setSelectedIndustry(ind);
-                          setIsDropdownOpen(false);
-                          setSearchTerm("");
-                        }}
-                        className={`w-full text-left px-3 py-2 rounded-lg text-xs transition flex items-center justify-between ${
-                          selectedIndustry === ind
-                            ? "bg-amber-500 text-black font-bold"
-                            : "text-slate-300 hover:bg-white/10 hover:text-white"
-                        }`}
-                      >
-                        <span>{ind}</span>
-                        {selectedIndustry === ind && <span>✓</span>}
-                      </button>
-                    ))
-                  ) : (
-                    <div className="p-3 text-xs text-slate-500 text-center">
-                      No matching industry found. Select "Other" below to specify.
-                    </div>
+                  {filteredIndustries.map((ind) => (
+                    <button
+                      key={ind}
+                      type="button"
+                      onClick={() => {
+                        setSelectedIndustry(ind);
+                        if (ind === "Other" && searchTerm.trim()) {
+                          setOtherIndustry(searchTerm.trim());
+                        }
+                        setIsDropdownOpen(false);
+                        setSearchTerm("");
+                      }}
+                      className={`w-full text-left px-3 py-2 rounded-lg text-xs transition flex items-center justify-between ${
+                        selectedIndustry === ind
+                          ? "bg-amber-500 text-black font-bold"
+                          : "text-slate-300 hover:bg-white/10 hover:text-white"
+                      }`}
+                    >
+                      <span>{ind}</span>
+                      {selectedIndustry === ind && <span>✓</span>}
+                    </button>
+                  ))}
+
+                  {/* Dynamic 'Use Custom Industry' Option when search has no exact match */}
+                  {searchTerm.trim().length > 0 && !filteredIndustries.some(i => i.toLowerCase() === searchTerm.trim().toLowerCase()) && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSelectedIndustry("Other");
+                        setOtherIndustry(searchTerm.trim());
+                        setIsDropdownOpen(false);
+                        setSearchTerm("");
+                      }}
+                      className="w-full text-left px-3 py-2.5 rounded-lg text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-amber-500/30 transition flex items-center justify-between mt-1"
+                    >
+                      <span>+ Use "{searchTerm.trim()}" as Industry</span>
+                      <span className="text-[10px] bg-amber-500 text-black px-1.5 py-0.5 rounded font-bold">Select Custom</span>
+                    </button>
                   )}
                 </div>
               </motion.div>
