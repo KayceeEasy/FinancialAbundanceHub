@@ -7,6 +7,9 @@ export const metadata: Metadata = {
 };
 
 export default function PrivacyPage() {
+  const whatsappUrl = "https://wa.me/2348068067298?text=Hello,%20I%20am%20contacting%20you%20from%20Financial%20Abundance%20Hub.";
+  const mailtoUrl = "mailto:blessingjoy@lifecardcompany.com?subject=Financial%20Abundance%20Hub%20Privacy%20Inquiry";
+
   return (
     <main className="max-w-4xl mx-auto px-6 pt-32 pb-20 text-slate-300">
       <h1 className="text-4xl md:text-5xl font-black text-white mb-4">
@@ -64,14 +67,20 @@ export default function PrivacyPage() {
           <ul className="list-disc pl-6 space-y-2 text-slate-400">
             <li>
               <strong>Email Support:</strong>{" "}
-              <a href="mailto:support@financialabundancehub.com" className="text-amber-500 hover:underline">
-                support@financialabundancehub.com
+              <a href={mailtoUrl} className="text-amber-500 hover:underline">
+                Contact Privacy & Support Team via Email
+              </a>
+            </li>
+            <li>
+              <strong>Direct Phone / WhatsApp Support:</strong>{" "}
+              <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="text-amber-500 hover:underline">
+                Chat with Support on WhatsApp
               </a>
             </li>
             <li>
               <strong>Online Inquiry Form:</strong>{" "}
               <Link href="/apply?program=General-Inquiry" className="text-amber-500 hover:underline">
-                Submit an Official Inquiry
+                Submit an Official Inquiry Form
               </Link>
             </li>
           </ul>
