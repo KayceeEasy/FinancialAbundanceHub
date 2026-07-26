@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
@@ -56,10 +57,24 @@ export default function PrivacyPage() {
         </section>
 
         <section className="space-y-3">
-          <h2 className="text-xl font-bold text-white">5. Your Data Rights</h2>
+          <h2 className="text-xl font-bold text-white">5. Your Data Rights & Contact Channels</h2>
           <p>
-            Depending on your jurisdiction, you have the right to request access to, correction of, or deletion of your personal data held by Financial Abundance Hub. To exercise these rights or ask questions regarding your privacy, please contact us through our official inquiry channels.
+            Depending on your jurisdiction, you have the right to request access to, correction of, or deletion of your personal data held by Financial Abundance Hub. To exercise these rights or ask questions regarding your privacy, please contact us through our official inquiry channels:
           </p>
+          <ul className="list-disc pl-6 space-y-2 text-slate-400">
+            <li>
+              <strong>Email Support:</strong>{" "}
+              <a href="mailto:support@financialabundancehub.com" className="text-amber-500 hover:underline">
+                support@financialabundancehub.com
+              </a>
+            </li>
+            <li>
+              <strong>Online Inquiry Form:</strong>{" "}
+              <Link href="/apply?program=General-Inquiry" className="text-amber-500 hover:underline">
+                Submit an Official Inquiry
+              </Link>
+            </li>
+          </ul>
         </section>
       </div>
     </main>

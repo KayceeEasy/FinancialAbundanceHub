@@ -5,7 +5,7 @@ export default function Footer() {
     <footer className="w-full bg-black/90 border-t border-white/10 text-slate-400 text-xs py-12 px-6 md:px-16 mt-20 relative z-10">
       <div className="max-w-6xl mx-auto space-y-8">
         
-        {/* Top Header & Navigation */}
+        {/* Top Header, Contact Channels & Navigation */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 pb-6 border-b border-white/10">
           <div>
             <Link href="/" className="text-lg font-bold tracking-tighter text-white">
@@ -22,6 +22,26 @@ export default function Footer() {
             <Link href="/apply" className="hover:text-amber-500 transition">Apply</Link>
             <Link href="/privacy" className="hover:text-amber-500 transition">Privacy Policy</Link>
             <Link href="/terms" className="hover:text-amber-500 transition">Terms of Service</Link>
+          </div>
+        </div>
+
+        {/* Contact & Inquiry Channels */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 bg-white/5 border border-white/10 rounded-2xl p-6 text-slate-300 text-xs">
+          <div>
+            <h4 className="text-white font-semibold mb-1 uppercase tracking-wider text-[11px] text-amber-500">Official Contact & Inquiries</h4>
+            <p className="text-slate-400">Have questions about our programs, privacy rights, or mentorship?</p>
+          </div>
+          <div>
+            <h5 className="text-slate-200 font-semibold mb-1">Email Support</h5>
+            <a href="mailto:support@financialabundancehub.com" className="text-amber-500 hover:underline">
+              support@financialabundancehub.com
+            </a>
+          </div>
+          <div>
+            <h5 className="text-slate-200 font-semibold mb-1">General Inquiries & Support</h5>
+            <Link href="/apply?program=General-Inquiry" className="text-amber-500 hover:underline">
+              Submit an Online Inquiry →
+            </Link>
           </div>
         </div>
 
