@@ -13,6 +13,8 @@ function ApplyForm() {
   const rawProgram = searchParams.get("program")?.replace(/-/g, ' ') || "General Inquiry";
 
   const [phone, setPhone] = useState<string>("");
+  const [selectedIndustry, setSelectedIndustry] = useState<string>("");
+  const [otherIndustry, setOtherIndustry] = useState<string>("");
   const [isPending, startTransition] = useTransition();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -24,6 +26,10 @@ function ApplyForm() {
     const formData = new FormData(e.currentTarget);
     formData.set("program", rawProgram);
     formData.set("phone", phone);
+    formData.set(
+      "industry",
+      selectedIndustry === "Other" ? (otherIndustry.trim() || "Other") : selectedIndustry
+    );
 
     startTransition(async () => {
       const res = await submitApplication(formData);
@@ -143,12 +149,35 @@ function ApplyForm() {
             <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
               Industry / Occupation
             </label>
-            <input
-              type="text"
-              name="industry"
-              placeholder="e.g. Finance, Tech, Real Estate"
-              className="w-full bg-zinc-900/80 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 transition text-sm"
-            />
+            <select
+              value={selectedIndustry}
+              onChange={(e) => setSelectedIndustry(e.target.value)}
+              className="w-full bg-zinc-900/80 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 transition text-sm"
+            >
+              <option value="" className="bg-zinc-900 text-slate-400">Select your industry / occupation</option>
+              <option value="Financial Services & Fintech" className="bg-zinc-900">Financial Services & Fintech</option>
+              <option value="Real Estate & Property Development" className="bg-zinc-900">Real Estate & Property Development</option>
+              <option value="Technology & Software (SaaS)" className="bg-zinc-900">Technology & Software (SaaS)</option>
+              <option value="Healthcare & Pharmaceuticals" className="bg-zinc-900">Healthcare & Pharmaceuticals</option>
+              <option value="E-Commerce & Retail" className="bg-zinc-900">E-Commerce & Retail</option>
+              <option value="Corporate & Enterprise Services" className="bg-zinc-900">Corporate & Enterprise Services</option>
+              <option value="Oil, Energy & Infrastructure" className="bg-zinc-900">Oil, Energy & Infrastructure</option>
+              <option value="Professional Services (Legal, Consulting, Accounting)" className="bg-zinc-900">Professional Services (Legal, Consulting, Accounting)</option>
+              <option value="Education & Coaching" className="bg-zinc-900">Education & Coaching</option>
+              <option value="Other" className="bg-zinc-900">Other (Please specify below)</option>
+            </select>
+
+            {selectedIndustry === "Other" && (
+              <motion.input
+                initial={{ opacity: 0, y: -5 }}
+                animate={{ opacity: 1, y: 0 }}
+                type="text"
+                value={otherIndustry}
+                onChange={(e) => setOtherIndustry(e.target.value)}
+                placeholder="Please specify your industry..."
+                className="w-full mt-3 bg-zinc-900/80 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 transition text-sm"
+              />
+            )}
           </div>
         </div>
 
