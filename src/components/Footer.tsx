@@ -1,8 +1,10 @@
 import Link from 'next/link';
 
 export default function Footer() {
-  const whatsappUrl = "https://wa.me/2348068067298?text=Hello,%20I%20am%20contacting%20you%20from%20Financial%20Abundance%20Hub.";
-  const mailtoUrl = "mailto:blessingjoy@lifecardcompany.com?subject=Financial%20Abundance%20Hub%20Inquiry";
+  const supportPhone = process.env.NEXT_PUBLIC_SUPPORT_PHONE || "2348068067298";
+  const supportEmail = process.env.NEXT_PUBLIC_SUPPORT_EMAIL || "blessingjoy@lifecardcompany.com";
+  const whatsappUrl = `https://wa.me/${supportPhone}?text=Hello,%20I%20am%20contacting%20you%20from%20Financial%20Abundance%20Hub.`;
+  const mailtoUrl = `mailto:${supportEmail}?subject=Financial%20Abundance%20Hub%20Inquiry`;
 
   return (
     <footer className="w-full bg-black/90 border-t border-white/10 text-slate-400 text-xs py-12 px-6 md:px-16 mt-20 relative z-10">

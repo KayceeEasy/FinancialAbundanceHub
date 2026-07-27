@@ -78,7 +78,7 @@ export async function submitApplication(formData: FormData) {
     rateLimitMap.set(clientIp, validTimestamps);
 
     // 4. Send Payload with All Field Aliases via both URL query params and POST body for Google Apps Script 302 redirect compatibility
-    const SHEET_URL = "https://script.google.com/macros/s/AKfycbzPCPmvUHJwANeKZ52bQbMM1_4X2iaLixW3gDixqCVt9p4xUAaGYIJC4wps9-jJQAha/exec";
+    const SHEET_URL = process.env.GOOGLE_SHEETS_WEBHOOK_URL || "https://script.google.com/macros/s/AKfycbzPCPmvUHJwANeKZ52bQbMM1_4X2iaLixW3gDixqCVt9p4xUAaGYIJC4wps9-jJQAha/exec";
 
     const payload: Record<string, string> = {
       // Primary keys
