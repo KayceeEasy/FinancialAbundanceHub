@@ -221,9 +221,11 @@ function ApplyForm() {
             className="w-full bg-zinc-900/80 border border-white/10 rounded-xl px-4 py-3 text-left text-white focus:outline-none focus:border-amber-500 transition text-sm flex justify-between items-center"
           >
             <span className={selectedIndustry ? "text-white font-medium" : "text-slate-500"}>
-              {selectedIndustry === "Other" && otherIndustry.trim()
-                ? otherIndustry.trim()
-                : (selectedIndustry || "Search or select your industry...")}
+              {selectedIndustry
+                ? (selectedIndustry === "Other" 
+                    ? (otherIndustry.trim() ? `Custom: ${otherIndustry.trim()}` : "Other (Please specify below)") 
+                    : selectedIndustry)
+                : "Search or select your industry..."}
             </span>
             <span className="text-slate-400 text-xs">{isDropdownOpen ? "▲" : "▼"}</span>
           </button>
@@ -254,8 +256,8 @@ function ApplyForm() {
                       type="button"
                       onClick={() => {
                         setSelectedIndustry(ind);
-                        if (ind === "Other" && searchTerm.trim()) {
-                          setOtherIndustry(searchTerm.trim());
+                        if (ind !== "Other") {
+                          setOtherIndustry("");
                         }
                         setIsDropdownOpen(false);
                         setSearchTerm("");
@@ -292,15 +294,15 @@ function ApplyForm() {
             )}
           </AnimatePresence>
 
-          {/* Conditional Custom Text Input for Other */}
-          {selectedIndustry === "Other" && (
+          {/* Conditional Custom Text Input when 'Other' is explicitly selected without a prefilled term */}
+          {selectedIndustry === "Other" && !otherIndustry.trim() && (
             <motion.input
               initial={{ opacity: 0, y: -5 }}
               animate={{ opacity: 1, y: 0 }}
               type="text"
               value={otherIndustry}
               onChange={(e) => setOtherIndustry(e.target.value)}
-              placeholder="Please specify your industry..."
+              placeholder="Please specify your custom industry..."
               className="w-full mt-3 bg-zinc-900/80 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 transition text-sm"
               required
             />
